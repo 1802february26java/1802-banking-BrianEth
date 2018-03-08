@@ -53,5 +53,25 @@ public class Controller {
 	}
 	
 	
+	public boolean deposit(double depo){
+		if(currentAccount == null){
+			System.out.println("You must login first");
+			return false;
+		} else if (depo <= 0) {
+			System.out.println("Please enter a valid deposit amount");
+		} else {
+			try {
+				currentAccount.withdraw(depo);
+				System.out.println("deposit complete");
+				return true;
+				
+			} catch (OverdrawException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		return false;
+	}
+	
 	
 }
