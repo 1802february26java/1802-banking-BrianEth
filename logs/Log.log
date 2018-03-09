@@ -1,0 +1,20 @@
+2018-03-09 11:29:13 ERROR ConnectionUtil:53 - exception thrown while inserting 
+java.sql.SQLException: No suitable driver found for jdbc:oracle:thin:@revaturebankdb.cxcscohikus1.us-east-2.rds.amazonaws.com:1521:ORCL
+	at java.sql.DriverManager.getConnection(DriverManager.java:689)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.revature.util.ConnectionUtil.getConnection(ConnectionUtil.java:18)
+	at com.revature.repository.BankAccountRepositoryJdbc.insert(BankAccountRepositoryJdbc.java:31)
+	at com.revature.repository.BankAccountRepositoryJdbc.main(BankAccountRepositoryJdbc.java:128)
+2018-03-09 11:29:13 INFO  ConnectionUtil:128 - false
+2018-03-09 11:31:03 ERROR ConnectionUtil:52 - exception thrown while inserting 
+java.sql.SQLException: No suitable driver found for jdbc:oracle:thin:@revaturebankdb.cxcscohikus1.us-east-2.rds.amazonaws.com:1521:ORCL
+	at java.sql.DriverManager.getConnection(DriverManager.java:689)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.revature.util.ConnectionUtil.getConnection(ConnectionUtil.java:18)
+	at com.revature.repository.BankAccountRepositoryJdbc.insert(BankAccountRepositoryJdbc.java:31)
+	at com.revature.repository.BankAccountRepositoryJdbc.main(BankAccountRepositoryJdbc.java:127)
+2018-03-09 11:31:03 INFO  ConnectionUtil:127 - false
+2018-03-09 11:37:08 TRACE ConnectionUtil:36 - getting statement object in insert account
+2018-03-09 11:37:09 TRACE ConnectionUtil:44 - parameters for insertion of account set
+2018-03-09 11:37:09 TRACE ConnectionUtil:47 - account inserted succefully
+2018-03-09 11:37:09 INFO  ConnectionUtil:127 - true
