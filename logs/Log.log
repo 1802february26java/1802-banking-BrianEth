@@ -329,3 +329,26 @@ java.sql.SQLSyntaxErrorException: ORA-00933: SQL command not properly ended
 2018-03-09 20:43:21 TRACE ConnectionUtil:171 - account updated succefully
 2018-03-09 20:43:33 TRACE ConnectionUtil:129 - getting statement obj in specific select accounts
 2018-03-09 20:45:37 TRACE ConnectionUtil:129 - getting statement obj in specific select accounts
+2018-03-09 20:59:55 TRACE ConnectionUtil:127 - getting statement obj in specific select accounts
+2018-03-09 21:00:10 TRACE ConnectionUtil:127 - getting statement obj in specific select accounts
+2018-03-09 21:03:12 TRACE ConnectionUtil:127 - getting statement obj in specific select accounts
+2018-03-09 21:04:19 TRACE ConnectionUtil:127 - getting statement obj in specific select accounts
+2018-03-09 21:08:57 TRACE ConnectionUtil:127 - getting statement obj in specific select accounts
+2018-03-09 21:09:22 TRACE ConnectionUtil:36 - getting statement object in insert account
+2018-03-09 21:09:22 TRACE ConnectionUtil:44 - parameters for insertion of account set
+2018-03-09 21:09:22 TRACE ConnectionUtil:47 - account inserted succefully
+2018-03-09 21:09:30 TRACE ConnectionUtil:127 - getting statement obj in specific select accounts
+2018-03-09 21:09:31 TRACE ConnectionUtil:127 - getting statement obj in specific select accounts
+2018-03-09 21:31:17 TRACE ConnectionUtil:29 - testing updating admin balance.
+2018-03-09 21:31:18 TRACE ConnectionUtil:158 - getting statement object in update account
+2018-03-09 21:31:19 TRACE ConnectionUtil:164 - parameters for update of account set
+2018-03-09 21:31:19 TRACE ConnectionUtil:169 - account updated succefully
+2018-03-09 21:42:16 TRACE ConnectionUtil:32 - testing updating admin balance.
+2018-03-09 21:42:17 TRACE ConnectionUtil:158 - getting statement object in update account
+2018-03-09 21:42:18 TRACE ConnectionUtil:164 - parameters for update of account set
+2018-03-09 21:42:18 TRACE ConnectionUtil:169 - account updated succefully
+2018-03-09 21:42:18 TRACE ConnectionUtil:127 - getting statement obj in specific select accounts
+2018-03-09 21:42:18 TRACE ConnectionUtil:32 - testing updating admin balance.
+2018-03-09 21:42:19 TRACE ConnectionUtil:158 - getting statement object in update account
+2018-03-09 21:42:19 TRACE ConnectionUtil:164 - parameters for update of account set
+2018-03-09 21:42:19 TRACE ConnectionUtil:169 - account updated succefully

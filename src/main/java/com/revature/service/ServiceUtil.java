@@ -2,6 +2,7 @@ package com.revature.service;
 
 import org.apache.log4j.Logger;
 
+import com.revature.exception.InvalidCredentialException;
 import com.revature.exception.OverdrawException;
 import com.revature.model.BankAccount;
 import com.revature.repository.BankAccountRepository;
@@ -29,15 +30,19 @@ public class ServiceUtil {
 	}
 	
 	
-	public BankAccount login(String user, String password){
-		
-		BankAccount account = repository.selectUserByUsername(user);
-		if(account.getPassword().equals(password)){
-			currentAccount = account;
-			System.out.println("You are now logged in");
-			return account;
+	public BankAccount login(String user, String password) throws InvalidCredentialException{
+		if(repository.selectUserByUsername(user) != null){
+			BankAccount account = repository.selectUserByUsername(user);
+
+			if(account.getPassword().equals(password)){
+				currentAccount = account;
+
+				System.out.println("You are now logged in");
+				return account;
+			}
+		} else {
+			throw new InvalidCredentialException("Invalid credentials, please try again.");
 		}
-		System.out.println("Login failed, please ensure you enter the correct credentials.");
 		return null;
 	}
 	
@@ -76,9 +81,7 @@ public class ServiceUtil {
 		} else {
 				currentAccount.deposit(depo);
 				repository.updateAccountBalance(currentAccount);
-				//System.out.println("deposit complete");
 				printRecipt();
-				//TODO: recipt?
 				return true;
 		}
 		
@@ -95,8 +98,6 @@ public class ServiceUtil {
 			try {
 				currentAccount.withdraw(withd);
 				repository.updateAccountBalance(currentAccount);
-				//System.out.println("withdrawl complete");
-				//TODO:recipt?
 				printRecipt();
 				return true;
 				

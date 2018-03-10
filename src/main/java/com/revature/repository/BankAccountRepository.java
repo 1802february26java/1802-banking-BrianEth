@@ -17,7 +17,7 @@ public interface BankAccountRepository {
 	
 	public Set<BankAccount> selectAll();
 	
-	public void updateAccountBalance(BankAccount account);
+	public boolean updateAccountBalance(BankAccount account);
 	
 	
 }

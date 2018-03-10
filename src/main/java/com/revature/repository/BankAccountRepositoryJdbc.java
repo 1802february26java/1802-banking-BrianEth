@@ -48,7 +48,6 @@ public class BankAccountRepositoryJdbc implements BankAccountRepository {
 				return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			logger.error("exception thrown while inserting ", e);
 		}
 		
@@ -58,7 +57,6 @@ public class BankAccountRepositoryJdbc implements BankAccountRepository {
 
 	@Override
 	public boolean insertProcedure(BankAccount account) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -151,7 +149,7 @@ public class BankAccountRepositoryJdbc implements BankAccountRepository {
 	}
 
 	@Override
-	public void updateAccountBalance(BankAccount account) {
+	public boolean updateAccountBalance(BankAccount account) {
 		try(Connection connection = ConnectionUtil.getConnection()){
 			int parameterIndex = 0;
 			
@@ -169,24 +167,15 @@ public class BankAccountRepositoryJdbc implements BankAccountRepository {
 			
 			if(statement.executeUpdate() > 0){
 				logger.trace("account updated succefully");
-				return;
+				return true;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			logger.error("exception thrown while updating ", e);
 		}
 		
 		
-		return;
+		return false;
 	}
-	
-	//tested connection.
-//	public static void main(String[] args) {
-//		BankAccountRepository repository = new BankAccountRepositoryJdbc();
-//		
-//		logger.info(repository.insert(new BankAccount(1,"Admin", "p4ssw0rd", 100.00)));
-//	}
-
 }
 
 
