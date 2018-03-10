@@ -71,7 +71,8 @@ public class BankAccount {
 	
 	public void withdraw(double balance) throws OverdrawException{
 		this.balance -= balance;
-		if(balance < 0) {
+		
+		if(this.balance < 0) {
 			throw new OverdrawException("Insufficient balance, you just over-drew");
 		}
 	}

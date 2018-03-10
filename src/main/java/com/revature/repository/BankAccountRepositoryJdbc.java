@@ -119,6 +119,66 @@ public class BankAccountRepositoryJdbc implements BankAccountRepository {
 		}
 		return null;
 	}
+
+	@Override
+	public BankAccount selectUserByUsername(String username) {
+		try(Connection connection = ConnectionUtil.getConnection()){
+			int parameterIndex = 0;
+			String sql = "SELECT * FROM BANKACCOUNT WHERE B_USER = ?";
+			
+			logger.trace("getting statement obj in specific select accounts");
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(++parameterIndex, username);
+			ResultSet result = statement.executeQuery();
+			
+			
+			if(result.next()) {
+				return new BankAccount(
+						result.getLong("B_ID"),
+						result.getString("B_USER"),
+						result.getString("B_PASSWORD"),
+						result.getDouble("B_BALANCE"));
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			
+			logger.error("Error while selecting account by user name",e);
+		}
+		return null;
+	}
+
+	@Override
+	public void updateAccountBalance(BankAccount account) {
+		try(Connection connection = ConnectionUtil.getConnection()){
+			int parameterIndex = 0;
+			
+			String sq1="UPDATE BANKACCOUNT SET B_BALANCE = ? WHERE B_USER = ?";
+		
+			logger.trace("getting statement object in update account");
+			
+			PreparedStatement statement = connection.prepareStatement(sq1);
+			statement.setDouble(++parameterIndex, account.getBalance());
+			statement.setString(++parameterIndex, account.getUsername());
+			
+			logger.trace("parameters for update of account set");
+			//System.out.println(statement.toString());
+			
+			
+			if(statement.executeUpdate() > 0){
+				logger.trace("account updated succefully");
+				return;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			logger.error("exception thrown while updating ", e);
+		}
+		
+		
+		return;
+	}
 	
 	//tested connection.
 //	public static void main(String[] args) {

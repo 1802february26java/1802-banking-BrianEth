@@ -13,7 +13,11 @@ public interface BankAccountRepository {
 	
 	public Set<String> selectUsers();
 	
+	public BankAccount selectUserByUsername(String username);
+	
 	public Set<BankAccount> selectAll();
+	
+	public void updateAccountBalance(BankAccount account);
 	
 	
 }

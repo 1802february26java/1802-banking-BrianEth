@@ -4,15 +4,22 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.revature.exception.OverdrawException;
 import com.revature.model.BankAccount;
 import com.revature.repository.BankAccountRepository;
 import com.revature.repository.BankAccountRepositoryJdbc;
+import com.revature.service.ServiceUtil;
+import com.revature.util.ConnectionUtil;
 
 public class Controller {
 
 	private static final Controller controller= new Controller();
 	BankAccountRepository repository = BankAccountRepositoryJdbc.getInstance();
+	ServiceUtil service = ServiceUtil.getInstance();
+	private static Logger logger = Logger.getLogger(ConnectionUtil.class);
+
 
 	private HashMap<String, BankAccount> accounts;
 	private BankAccount currentAccount;
@@ -24,28 +31,49 @@ public class Controller {
 	
 	
 	public void openBank(){
-		//put all bank accounts in memory
-		loadDatabase();
+		System.out.println("This bank is now open, what would you like to do?");
 		Scanner input = new Scanner(System.in);
 		while(input.hasNext()){
 			String[] command = input.nextLine().split(" ");
+			command[0] = command[0].toLowerCase();
 			switch(command[0]){
 			case "login":
 				if(command.length==3){
-					if(accounts.get(command[1]).getPassword()== command[2]){
-						currentAccount= accounts.get(command[1]);
-					} else {
-						//TODO: invalid login
-					}
+					currentAccount = ServiceUtil.getInstance().login(command[1].toLowerCase(), command[2]);
 				} else {
 					//TODO: invalid login
 				}
 				break;
 			case "deposit":
-				
+				if(command.length == 2){
+					try{
+					service.deposit(Double.parseDouble(command[1]));
+					}catch (NumberFormatException e) {
+						System.out.println("Please enter a number after deposit when trying to make a deposit.");
+					}
+				} else {
+					//TODO: exception for incorrect input
+					System.out.println("Incorrect entry.  Please only enter 'deposit [amount]'");
+				}
 				break;
 			case "withdraw":
+				if(command.length==2){
+					try{
+					service.withdraw(Double.parseDouble(command[1]));
+					} catch (OverdrawException e) {
+						System.out.println(e.getMessage());
+					}catch (NumberFormatException e) {
+						System.out.println("Please enter a number after withdraw when trying to make a withdrawl.");
+					}
+				}
+				break;
 				
+			case "view":
+				if(currentAccount==null){
+					System.out.println("Please login first.");
+				} else {
+					System.out.println("Your current balance is: " +service.getBalance());
+				}
 				break;
 				
 			case "logout":
@@ -53,73 +81,47 @@ public class Controller {
 				break;
 				
 			case "register":
+				if(command.length==3) {
+					if(currentAccount != null) {
+						System.out.println("Please logout first.");
+					} else {
+						if(service.getInstance().register(command[1].toLowerCase(), command[2])){
+							System.out.println("Registration successful. Please try logging in.");
+						} else {
+							System.out.println("Registration failed, please try again.");
+						}
+					}
+				} else {
+					System.out.println("invalid.");
+				}
 				//TODO: registration
+				break;
+			case "help":
+				System.out.println("available commands: ");
+				System.out.println("login [username] [password]");
+				System.out.println("deposit [amount]");
+				System.out.println("withdraw [amount]");
+				System.out.println("exit");
+				break;
+				
+			case "exit":
+				//stop program?
+				if(currentAccount != null){
+					service.logout();
+				}
+				System.out.println("Exiting program now.");
+				System.exit(0);
 				break;
 			default:
 				System.out.println("invalid request, please try again");
 			}
+			System.out.println("How can I help you now?");
+
 		}
+
+		input.close();
 	}
 	
-	private void loadDatabase(){
-		Set<BankAccount> allAccounts = repository.selectAll();
-		for(BankAccount a: allAccounts){
-			accounts.put(a.getUsername(),a);
-		}
-		
-	}
-	
-	public boolean login(String username, String password){
-//		try{
-			BankAccount account = accounts.get(username);
-			if(currentAccount == account){
-				System.out.println("already logged into this account");
-			} else if (account.authenticate(username, password)){
-				currentAccount = account;
-				System.out.println("Login successful");
-				return true;
-			}
-			
-			
-//		} catch(OverdrawException e){
-//			System.out.println(e.getMessage());
-//		}
-		
-		
-		return false;
-	}
-	
-	public boolean logout() {
-		if(currentAccount == null){
-			System.out.println("Nobody is logged in");
-			return false;
-		} else {
-			currentAccount = null;
-			System.out.println("Logout successful");
-			return true;
-		}
-	}
-	
-	
-	public boolean deposit(double depo){
-		if(currentAccount == null){
-			System.out.println("You must login first");
-			return false;
-		} else if (depo <= 0) {
-			System.out.println("Please enter a valid deposit amount");
-		} else {
-			try {
-				currentAccount.withdraw(depo);
-				System.out.println("deposit complete");
-				return true;
-				
-			} catch (OverdrawException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		
-		return false;
-	}
-	
+
 	
 }
